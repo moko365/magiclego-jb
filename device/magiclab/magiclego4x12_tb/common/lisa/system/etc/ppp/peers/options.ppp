@@ -1,0 +1,8 @@
+debug
+/dev/pts/2
+crtscts
+nodetach
+usepeerdns
+defaultroute
+ipcp-max-failure 30
+connect "chat -v -t 15 -f /system/etc/ppp/chat-isp"

@@ -1,0 +1,30 @@
+#!/system/bin/sh
+case $1 in
+    ppp2)
+	echo 0 > /proc/sys/net/ipv4/ip_forward;
+	;;
+esac
+
+#Disable routing using ppp interface
+/system/bin/setprop "net.interfaces.defaultroute" ""
+/system/bin/setprop "net.$1.dns1" ""
+/system/bin/setprop "net.$1.dns2" ""
+/system/bin/setprop "net.$1.local-ip" ""
+/system/bin/setprop "net.$1.remote-ip" ""
+/system/bin/setprop "net.$1.operstate" "down"
+/system/bin/log -t pppd.ip-down "$1 ip-down"
+
+#Set routing to last active interface
+x=0
+while [ $x -le 5 ]
+do
+  ppp_state="$(/system/bin/getprop "net.ppp$x.operstate")"
+  if [ "$ppp_state" = "up"  ]
+  then
+	/system/bin/log -t pppd.ip-down "set route using ppp$x interface"
+	/system/bin/setprop "net.interfaces.defaultroute" "ppp$x"
+  else
+	echo "ppp$x down"
+  fi
+  x=$(( $x + 1 ))
+done

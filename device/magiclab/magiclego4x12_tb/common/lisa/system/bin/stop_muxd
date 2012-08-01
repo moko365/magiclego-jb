@@ -1,0 +1,17 @@
+#!/system/bin/sh
+
+/system/bin/log -t RIL.muxd.stop "calling stop_muxd......'$1'"
+
+# make sure muxd is running before killing
+if [ -e /data/rril/muxd.pid ]; then
+
+    MUXD_PID="$(cat /data/rril/muxd.pid)"
+    /system/bin/log -t RIL.muxd.stop "muxd pid='$MUXD_PID'"
+
+    kill -$1 $MUXD_PID
+
+else
+    /system/bin/log -t RIL.muxd.stop "muxd.pid not found: muxd not running!"
+    exit 1
+
+fi

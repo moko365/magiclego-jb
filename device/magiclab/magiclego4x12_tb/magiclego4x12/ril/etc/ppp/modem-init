@@ -1,0 +1,13 @@
+#!/system/bin/sh
+
+echo "AT!ENTERCND=\"A710\"" > /dev/ttyUSB2
+sleep 1
+
+echo "AT!UDPID=683c" > /dev/ttyUSB2
+sleep 3
+
+echo "AT!SLEEP=1" > /dev/ttyUSB2
+sleep 1
+
+echo "AT!RESET" > /dev/ttyUSB2
+sleep 1

@@ -1,0 +1,68 @@
+commit 36f97d110100b376b3996654c84faff4e0646178
+Author: eason_yen <eason_yen@coasia.com.tw>
+Date:   Tue Jun 26 09:53:20 2012 +0800
+
+    [Sensor] Seperate Sensor HAL into invensense_hal and local_hal
+    
+    Description:
+    
+    1. invensense_hal includes of accel, compass, gyro
+    2. local_hal includes of light and proximity
+    
+    Change-Id: I84043d8f54357f278859c4a1f4d3f6c76990dfbc
+    Signed-off-by: eason_yen <eason_yen@coasia.com.tw>
+    Reviewed-on: http://10.1.3.66:8080/926
+    Reviewed-by: walter wu <walter_wu@coasia.com.tw>
+    Tested-by: walter wu <walter_wu@coasia.com.tw>
+
+commit 8accd3140715b98f99c0911518c3ee370b67444a
+Author: Charles Tsai <charles_tsai@coasia.com.tw>
+Date:   Fri Jun 29 10:20:34 2012 +0800
+
+    [RIL] Fix misss gsm0710muxd in binary build
+    
+    Change-Id: Ic6bcb53172da1afe4d1036261a3ad6cb0540ca11
+    Signed-off-by: Charles Tsai <charles_tsai@coasia.com.tw>
+    Reviewed-on: http://10.1.3.66:8080/925
+    Reviewed-by: Anthony Shen <anthony_shen@coasia.com.tw>
+    Tested-by: Anthony Shen <anthony_shen@coasia.com.tw>
+
+commit 11d645b017bda5e48b39bc173bf31c263460133e
+Author: Walter Wu <walter_wu@coasia.com.tw>
+Date:   Thu Jun 28 18:59:50 2012 +0800
+
+    [Audio] Make the volume of incall & voice recording more louder
+    
+    Change-Id: I7c10a7555e1be6ecdda11244a74f728c809ce576
+    Reviewed-on: http://10.1.3.66:8080/924
+    Reviewed-by: james_wang <james_wang@coasia.com.tw>
+    Tested-by: james_wang <james_wang@coasia.com.tw>
+
+commit a94ac0c357df52bebf0f33ec28f84140bfd45acd
+Author: Charles Tsai <charles_tsai@coasia.com.tw>
+Date:   Mon Jun 25 13:19:36 2012 +0800
+
+    [RIL] Change default ril to libublox-lisa-ril
+    
+    Change-Id: I409f4a287e9dd39fe10186785e14726551096211
+    Signed-off-by: Charles Tsai <charles_tsai@coasia.com.tw>
+    Reviewed-on: http://10.1.3.66:8080/912
+    Reviewed-by: Anthony Shen <anthony_shen@coasia.com.tw>
+    Tested-by: Anthony Shen <anthony_shen@coasia.com.tw>
+
+commit 6849b8d4ca2e39886616a4c9644480bf8b55a39c
+Author: Walter Wu <walter_wu@coasia.com.tw>
+Date:   Mon Jun 25 17:35:08 2012 +0800
+
+    [FM Audio] MT6620 FM Audio support
+    
+    (1) Integrate mt6620 fm with ymu828b audio codec
+    (2) Do not support spk output switching (magiclab.hw.mt6620.fmrec.enable=0)
+    (3) Do not support fm recording (magiclab.hw.mt6620.fmspk.enable=0)
+    (4) When FM playing, if the headset plug out, stop the fm playback
+    (5) Add test_analogin test program
+    
+    Change-Id: I76558299a0cac510a681955df4fde41d222fb98f
+    Reviewed-on: http://10.1.3.66:8080/913
+    Reviewed-by: Anthony Shen <anthony_shen@coasia.com.tw>
+    Tested-by: Anthony Shen <anthony_shen@coasia.com.tw>
