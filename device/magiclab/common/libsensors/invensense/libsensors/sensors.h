@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-#ifndef ANDROID_SENSORS_H
-#define ANDROID_SENSORS_H
+#ifndef ANDROID_SAMSUNG_SENSORS_H
+#define ANDROID_SAMSUNG_SENSORS_H
 
 #include <stdint.h>
 #include <errno.h>
@@ -31,9 +31,7 @@ __BEGIN_DECLS
 
 /*****************************************************************************/
 
-#ifndef ARRAY_SIZE
 #define ARRAY_SIZE(a) (sizeof(a) / sizeof(a[0]))
-#endif
 
 #define ID_MPL_BASE (0)
 #define ID_RV (ID_MPL_BASE)
@@ -44,6 +42,10 @@ __BEGIN_DECLS
 #define ID_M  (ID_A + 1)
 #define ID_O  (ID_M + 1)
 
+#define ID_L  (ID_O + 1)
+#define ID_P  (ID_L + 1)
+#define ID_PR (ID_P + 1)
+
 /*****************************************************************************/
 
 /*
@@ -52,4 +54,4 @@ __BEGIN_DECLS
 
 __END_DECLS
 
-#endif  // ANDROID_SENSORS_H
+#endif  /* ANDROID_SAMSUNG_SENSORS_H */

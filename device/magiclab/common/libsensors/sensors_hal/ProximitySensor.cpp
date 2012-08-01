@@ -52,7 +52,7 @@ bool ProximitySensor::hasPendingEvents() const {
 
 int ProximitySensor::handleEnable(int en) {
 
-	LOGV("%s: en = %d", __PRETTY_FUNCTION__, en);
+	ALOGV("%s: en = %d", __PRETTY_FUNCTION__, en);
     if (!en)
         return 0;
 

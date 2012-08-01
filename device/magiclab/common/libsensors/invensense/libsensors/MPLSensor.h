@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/*************Removed the gesture related info for Google check in : Meenakshi Ramamoorthi: May 31st *********/
 
 #ifndef ANDROID_MPL_SENSOR_H
 #define ANDROID_MPL_SENSOR_H
@@ -27,41 +28,11 @@
 #include "sensors.h"
 #include "SensorBase.h"
 
-#include "ml.h"
-
-/* comment this define to use raw (not bias compensated) gyro as 
-   TYPE_GYROSCOPE */
-/* uncomment this define to use calibrated gyro as TYPE_GYROSCOPE */
-#define USE_TYPE_GYROSCOPE_COMPENSATED
-
-#define EXTRA_VERBOSE (0)
-#define FUNC_LOG LOGV("%s", __PRETTY_FUNCTION__)
-#define VFUNC_LOG LOGV_IF(EXTRA_VERBOSE, "%s", __PRETTY_FUNCTION__)
-#define CALL_MEMBER_FN(pobject, ptrToMember) ((pobject)->*(ptrToMember))
-
 /*****************************************************************************/
 /** MPLSensor implementation which fits into the HAL example for crespo provided
  * * by Google.
  * * WARNING: there may only be one instance of MPLSensor, ever.
  */
- 
-class NineAxisSensorFusion
-{
-    public:
-        NineAxisSensorFusion();
-        ~NineAxisSensorFusion();
-    public:
-        void registerEnabler(inv_error_t (*fp_enable_9x_fusion) (void));
-        void registerDisabler(inv_error_t (*fp_disable_9x_fusion) (void));
-        inv_error_t enable();
-        inv_error_t disable();
-        int status() { return enabled; }
-        
-    private:
-        inv_error_t (*fp_enable_9x_fusion) (void);
-        inv_error_t (*fp_disable_9x_fusion) (void);
-        int enabled;
-};
 
 class MPLSensor: public SensorBase
 {
@@ -71,27 +42,21 @@ public:
     MPLSensor();
     virtual ~MPLSensor();
 
-    enum {
-        RotationVector = 0,
-        LinearAccel,
-        Gravity,
-        Gyro,
+    enum
+    {
+        Gyro=0,
         Accelerometer,
         MagneticField,
         Orientation,
-        
+        RotationVector,
+        LinearAccel,
+        Gravity,
         numSensors
     };
 
     virtual int setDelay(int32_t handle, int64_t ns);
     virtual int enable(int32_t handle, int enabled);
     virtual int readEvents(sensors_event_t *data, int count);
-    virtual void computeLocalSensorMask(int enabled_sensors);
-    virtual bool needDMPStop();
-    virtual bool needStateChange(bool changing_sensors, bool restart) { return (changing_sensors || restart); }
-    virtual void enableFeatures() { return; }
-    virtual void shutdownFeatures() { return; }
-    virtual void adjustFifoRate(int& rate) { return ; }
     virtual int getFd() const;
     virtual int getAccelFd() const;
     virtual int getTimerFd() const;
@@ -105,15 +70,12 @@ public:
     void cbOnMotion(uint16_t);
     void cbProcData();
 
-    //static pointer to the object that will handle callbacks
-    static MPLSensor* gMPLSensor;
-
 protected:
 
     void clearIrqData(bool* irq_set);
-    virtual void setPowerStates(int enabledsensor);
+    void setPowerStates(int enabledsensor);
     void initMPL();
-    void enableFIFO();
+    void setupFIFO();
     void setupCallbacks();
     void gyroHandler(sensors_event_t *data, uint32_t *pendmask, int index);
     void accelHandler(sensors_event_t *data, uint32_t *pendmask, int index);
@@ -124,32 +86,33 @@ protected:
     void orienHandler(sensors_event_t *data, uint32_t *pendmask, int index);
     void calcOrientationSensor(float *Rx, float *Val);
     int estimateCompassAccuracy();
-    void loadCompassCalibrationEnabler(void* h_dmp_lib, const char* suffix);
-    void enable9Axis(int enable);
-    int64_t now_ns();
-    virtual int update_delay();
 
-    int mMpuAccuracy; // global storage for the current accuracy status
-    int mNewData; // flag indicating that the MPL calculated new output values
+    int mMpuAccuracy; //global storage for the current accuracy status
+    int mNewData; //flag indicating that the MPL calculated new output values
     int mDmpStarted;
     long mMasterSensorMask;
     long mLocalSensorMask;
     int mPollTime;
-    int mCurFifoRate; // current fifo rate
-    bool mHaveGoodMpuCal; // flag indicating that the cal file can be written
+    int mCurFifoRate; //current fifo rate
+    bool mHaveGoodMpuCal; //flag indicating that the cal file can be written
+    bool mHaveGoodCompassCal;
     bool mUseTimerIrqAccel;
     bool mUsetimerIrqCompass;
     bool mUseTimerirq;
     struct pollfd mPollFds[4];
     int mSampleCount;
     pthread_mutex_t mMplMutex;
-    NineAxisSensorFusion nineAxisSF;
+    int64_t now_ns();
+    int64_t select_ns(unsigned long long time_set[]);    
 
     enum FILEHANDLES
     {
         MPUIRQ_FD, ACCELIRQ_FD, COMPASSIRQ_FD, TIMERIRQ_FD,
     };
 
+private:
+
+    int update_delay();
     int accel_fd;
     int timer_fd;
 
@@ -162,12 +125,18 @@ protected:
     long int mOldEnabledMask;
     android::KeyedVector<int, int> mIrqFds;
 
+    /* added for dynamic get sensor list              */
+    bool mNineAxisEnabled;
+    void fillAccel(unsigned char accel, struct sensor_t *list);
+    void fillCompass(unsigned char compass, struct sensor_t *list);
+    void fillGyro(const char* gyro, struct sensor_t *list);
+    void fillRV(struct sensor_t *list);
+    void fillOrientation(struct sensor_t *list);
+    void fillGravity(struct sensor_t *list);
+    void fillLinearAccel(struct sensor_t *list);
 };
 
-extern "C" {
 void setCallbackObject(MPLSensor*);
-MPLSensor* getCallbackObject();
-}
 
 /*****************************************************************************/
 
