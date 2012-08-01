@@ -1,0 +1,130 @@
+# config.mk
+#
+# Product-specific compile-time definitions.
+#
+TARGET_BOARD_PLATFORM := exynos4
+TARGET_SOC := exynos4x12
+
+# CPU options
+TARGET_CPU_ABI := armeabi-v7a
+TARGET_CPU_ABI2 := armeabi
+TARGET_ARCH := arm
+TARGET_ARCH_VARIANT := armv7-a-neon
+TARGET_CPU_SMP := true
+ARCH_ARM_HAVE_TLS_REGISTER := true
+
+TARGET_NO_BOOTLOADER := true
+TARGET_NO_KERNEL := true
+TARGET_NO_RADIOIMAGE := true
+TARGET_PROVIDES_INIT_TARGET_RC := true
+TARGET_BOOTLOADER_BOARD_NAME := magiclego4x12
+
+ifeq ($(WIRELESS_MODULE),bcm4330)
+# Wifi related defines
+BOARD_WPA_SUPPLICANT_DRIVER := NL80211
+WPA_SUPPLICANT_VERSION      := VER_0_8_X
+BOARD_WPA_SUPPLICANT_PRIVATE_LIB := lib_driver_cmd_bcmdhd
+BOARD_HOSTAPD_DRIVER        := NL80211
+BOARD_HOSTAPD_PRIVATE_LIB   := lib_driver_cmd_bcmdhd
+BOARD_WLAN_DEVICE           := bcmdhd
+WIFI_DRIVER_FW_PATH_PARAM   := "/sys/module/bcmdhd/parameters/firmware_path"
+WIFI_DRIVER_MODULE_PATH     := "/system/lib/modules/bcmdhd.ko"
+WIFI_DRIVER_MODULE_NAME     := "bcmdhd"
+WIFI_DRIVER_FW_PATH_STA     := "/system/vendor/firmware/fw_bcmdhd.bin"
+WIFI_DRIVER_FW_PATH_P2P     := "/system/vendor/firmware/fw_bcmdhd_p2p.bin"
+WIFI_DRIVER_FW_PATH_AP      := "/system/vendor/firmware/fw_bcmdhd_apsta.bin"
+BOARD_HAVE_BLUETOOTH := true
+BOARD_HAVE_BLUETOOTH_BCM := true
+endif
+
+BOARD_USES_GENERIC_AUDIO := false
+BOARD_USES_I2S_AUDIO := true
+BOARD_USES_PCM_AUDIO := false
+BOARD_USES_SPDIF_AUDIO := false
+BOARD_HAVE_BLUETOOTH := true
+
+# ULP Audio
+USE_ULP_AUDIO := false
+
+# ALP Audio
+BOARD_USE_ALP_AUDIO := true
+
+# SEC Camera
+USE_SEC_CAMERA := true
+CAMERA_USE_DIGITALZOOM := true
+
+# Enable JIT
+WITH_JIT := true
+
+BOARD_HAS_TWOSTORAGES := true
+TARGET_USERIMAGES_USE_EXT4 := true
+BOARD_SYSTEMIMAGE_PARTITION_SIZE := 314572800
+BOARD_USERDATAIMAGE_PARTITION_SIZE := 1073741824
+BOARD_FLASH_BLOCK_SIZE := 4096
+
+BOARD_USES_HGL := true
+BOARD_NO_32BPP := true
+
+BOARD_USES_HDMI_SUBTITLES := false
+BOARD_USES_HDMI := true
+BOARD_HDMI_STD := STD_1080P
+BOARD_HDMI_DDC_CH := DDC_CH_I2C_7
+BOARD_USES_FIMGAPI := true
+
+BOARD_USE_SAMSUNG_COLORFORMAT := true
+BOARD_FIX_NATIVE_COLOR_FORMAT := true
+BOARD_NONBLOCK_MODE_PROCESS := true
+BOARD_USE_STOREMETADATA := true
+BOARD_USE_METADATABUFFERTYPE := true
+BOARD_USES_MFC_FPS := false
+BOARD_USE_S3D_SUPPORT := true
+BOARD_USE_DRM := true
+BOARD_USE_CSC_FIMC := false
+
+BOARD_USES_HIGH_RESOLUTION_LCD := false
+
+# Enable V4L2 & ION
+BOARD_USE_V4L2 := false
+BOARD_USE_V4L2_ION := false
+
+SCREEN_WIDTH := 1366
+SCREEN_HEIGHT := 768
+DEFAULT_FB_NUM := 0
+
+USE_OPENGL_RENDERER := true
+
+# Invensense mlsdk version, for bring up, the value should be true
+BOARD_USE_LEGACY_INVENSENSE := false
+
+# TAOS TMD27713 Light&Proximity Sensor module
+BOARD_USE_TAOS_TMD27713 := true
+
+# Use legacy camera, for bring up, the value should be false
+BOARD_USE_LEGACY_CAMERA := false
+
+# Use samsung audio HAL for wm8994
+BOARD_USE_SAMSUNG_AUDIO_HAL := true
+
+# Use yamaha audio HAL for ymu828b
+BOARD_USE_YAMAHA_AUDIO_HAL := false
+BOARD_USES_ALSA_AUDIO := false
+
+# Use magic lego camera HAL
+BOARD_USE_MAGICLEGO_CAMERA_HAL := true
+
+ifneq ($(WIRELESS_MODULE),bcm4330)
+BOARD_HAVE_MTK_MT6620 := true
+BOARD_GPS_LIBRARIES := true
+BOARD_WPA_SUPPLICANT_DRIVER := WEXT
+WIFI_DRIVER_MODULE_PATH := /system/lib/modules/wlan.ko
+WIFI_DRIVER_MODULE_NAME := wlan0
+WPA_BUILD_SUPPLICANT := true
+#CONFIG_CTRL_IFACE := y
+WPA_SUPPLICANT_VERSION := VER_0_6_X
+P2P_SUPPLICANT_VERSION := VER_0_8_X
+BOARD_P2P_SUPPLICANT_DRIVER := NL80211
+endif
+
+ifeq ($(BUILD),binary)
+BOARD_USE_BINARY_BUILD := true
+endif

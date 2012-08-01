@@ -1,0 +1,9 @@
+# uncomment the following line to debug pppd
+#debug
+/dev/pts/5
+crtscts
+nodetach
+usepeerdns
+defaultroute
+ipcp-max-failure 30
+connect "chat -t 15 -f /system/etc/ppp/chat-isp2"

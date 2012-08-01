@@ -1,0 +1,10 @@
+#
+# system.prop for magiclego4x12
+#
+rild.pppd=false
+rild.libpath=/system/lib/libublox-lisa-ril.so
+rild.libargs=-a /dev/pts/0 -n /dev/pts/1
+
+# MT6620 related
+wifi.interface=wlan0
+Wi-Fi.tethering.interface=ap0

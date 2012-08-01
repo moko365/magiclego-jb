@@ -1,0 +1,59 @@
+on post-fs
+
+on post-fs-data
+    # Set permissions for U-blox RIL repository
+    mkdir /data/rril 0775 radio radio
+    chmod radio radio /data/rril
+    chmod 0770 /system/etc/rril
+    chown radio radio /system/etc/rril/repository.txt
+    chmod 0660 /system/etc/rril/repository.txt
+
+# Set U-blox RIL repository state
+    setprop net.rril.repository notready
+
+# Multiplexing device
+service gsmmuxd /system/bin/gsm0710muxd –s/dev/ttySAC2 –n6 -v7 -mbasic
+    user radio
+    group radio cache inet misc
+    oneshot
+
+# Prepare U-blox RIL repository
+service rril_repo /system/bin/rril-repo.sh
+    class main
+    user radio
+    group radio cache inet misc
+    oneshot
+
+service pppd_default /system/bin/pppd call options.ppp
+    user root
+    group radio cache inet misc
+    disabled
+    oneshot
+
+service pppd_data0 /system/bin/init.gprs-pppd
+    user root
+    group radio cache inet misc
+    disabled
+    oneshot
+
+service pppd_data1 /system/bin/init.gprs-pppd
+    user root
+    group radio cache inet misc
+    disabled
+    oneshot
+
+service pppd_term /system/bin/stop_pppd 15
+    disabled
+    oneshot
+
+service pppd_kill /system/bin/stop_pppd 9
+    disabled
+    oneshot
+
+service muxd_term /system/bin/stop_muxd 15
+    disabled
+    oneshot
+
+service muxd_kill /system/bin/stop_muxd 9
+    disabled
+    oneshot

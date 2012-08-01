@@ -1,0 +1,63 @@
+#!/system/bin/sh
+# An unforunate wrapper script
+# so that the exit code of pppd may be retrieved
+
+
+# this is a workaround for issue #651747
+#trap "/system/bin/sleep 1;exit 0" TERM
+
+ppp_if="$(/system/bin/getprop "net.ppp.start")"
+
+if [ -z "$ppp_if" ]; then
+	ppp_if="0"
+fi
+
+/system/bin/log -t pppd.gprs "Configure pppd security options"
+#Get authentication properties
+ppp_auth="$(/system/bin/getprop "net.ppp$ppp_if.auth")"
+ppp_usr="$(/system/bin/getprop "net.ppp$ppp_if.usr")"
+ppp_psw="$(/system/bin/getprop "net.ppp$ppp_if.psw")"
+
+#Set authentication files
+echo "$ppp_usr     *     $ppp_psw        *" > /system/etc/ppp/chap-secrets
+echo "$ppp_usr     *     $ppp_psw        *" > /system/etc/ppp/pap-secrets
+
+#Clear authentication properties for security reason
+/system/bin/setprop "net.ppp$ppp_if.auth" ""
+/system/bin/setprop "net.ppp$ppp_if.usr" ""
+/system/bin/setprop "net.ppp$ppp_if.psw" ""
+
+PPPD_PID=
+
+/system/bin/setprop "net.ppp$ppp_if.ppp-exit" ""
+rm -f /data/rril/ppp$ppp_if.pid
+
+/system/bin/log -t pppd.start "Starting pppd"
+
+case $ppp_auth in
+0)
+	/system/bin/pppd call gprs$(( $ppp_if + 1 ))
+;;
+*)
+#	/system/bin/pppd user $ppp_usr call gprs$(( $ppp_if + 1 ))
+	/system/bin/pppd call gprs$(( $ppp_if + 1 ))
+;;
+esac
+
+PPPD_EXIT=$?
+PPPD_PID=$!
+
+# moved this from ip-down script to here--sometimes ip-down doesn't finish
+# before pppd terminates leaving net.ppp0.operstate as "up"
+#
+/system/bin/setprop "net.ppp$ppp_if.dns1" ""
+/system/bin/setprop "net.ppp$ppp_if.dns2" ""
+/system/bin/setprop "net.ppp$ppp_if.local-ip" ""
+/system/bin/setprop "net.ppp$ppp_if.remote-ip" ""
+/system/bin/setprop "net.ppp$ppp_if.gw" ""
+
+/system/bin/setprop "net.ppp$ppp_if.operstate" "down"
+
+/system/bin/log -t pppd.start "pppd exited with $PPPD_EXIT"
+
+/system/bin/setprop "net.ppp$ppp_if.ppp-exit" "$PPPD_EXIT"

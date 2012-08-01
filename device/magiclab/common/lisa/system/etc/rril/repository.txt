@@ -1,0 +1,112 @@
+// The same name must be used for each Request in the RequestTimeouts and RequestNumRetries groups.
+// The request name must also match the value used in the mapping table in repository.cpp.
+Group RequestTimeouts
+    Dial                               90000
+    Operator                           30000
+    Dtmf                                   0
+    SendSms                           180000
+    SendSmsExpectMore                 180000
+    SetupDefaultPDP                   300000
+    SendUSSD                          180000
+    GetCLIR                            60000
+    QueryCallForwardStatus             60000
+    SetCallForward                     60000
+    QueryCallWaiting                   60000
+    SetCallWaiting                     60000
+    SmsAcknowledge                     60000
+    Answer                             90000
+    DeactivateDataCall                180000
+    QueryNetworkSelectionMode          60000
+    SetNetworkSelectionAutomatic      300000
+    SetNetworkSelectionManual         300000
+    QueryAvailableNetworks            300000
+    QueryCLIP                          60000
+    SetPreferredNetworkType           300000
+    RadioPower                        120000
+    GetNeighboringCellIDs              60000
+    GetIPAddress                       30000
+    GetDNS                             30000
+
+
+// The same name must be used for each Request in the RequestTimeouts and RequestNumRetries groups.
+// The request name must also match the value used in the mapping table in repository.cpp.
+Group RequestNumRetries
+
+Group OtherTimeouts
+    TimeoutCmdInit                      5000
+    TimeoutCmdNoop                      5000
+    TimeoutCmdOnline                    5000
+    TimeoutAPIDefault                   5000
+    TimeoutDTRDrop                      5000
+    TimeoutWaitForInit                  5000
+
+Group TTY
+    CommandPort                         /dev/socket/qemud
+    SimPort                             /dev/socket/qemud
+    Data1Port                           COM3
+    Data2Port                           COM4
+    Data3Port                           COM5
+    BaudRate                            115200
+    NumOpenAttempts                     5
+    TimeBetweenOpenAttempts             1000    // Value is in ms
+    DataModeInterruptionQuantum         500
+
+Group RILSettings
+    MaxCommandTimeouts                  1
+    MaxInitRetries                      0
+    DataModeCmdDelay                    1000    // Value is in ms
+    DataModeMaxTimeWithoutCmd           10000   // Value is in ms
+    DefaultCmdRetries                   0
+    RadioOnDelay                        1500    // Value is in ms
+    RadioOffDelay                       500     // Value is in ms
+    UseUSIMAddress                      0       // 0 = FALSE, 1 = TRUE
+                                                // If using USIM and TRUE, then retreiving phonebook entries
+                                                // from USIM card will use USIM address
+                                                // for CRSM (restricted SIM) command.  Otherwise use
+                                                // 2G SIM address.
+
+Group NetworkSettings
+    ConnectRspDelay                     2000    // Value is in ms
+
+// Settable values for the InitCmds group include:
+//   PreInitCmds,  PreReinitCmds,  PreUnlockCmds,  PreSmsInitCmds
+//  PostInitCmds, PostReinitCmds, PostUnlockCmds, PostSmsInitCmds
+Group InitCmds
+
+Group Eons
+    UseCphsPlmnName                     1
+
+Group Secure
+    EONSEnabled                         0
+
+Group LastValues
+    LastCLIP                            0
+    LastCLIR                            0
+    LastCOLP                            0
+    LastCOLR                            0
+    LastEquipmentState                  2
+
+Group SIMTK
+    TerminalProfile                     00112233445566778899AABBCCDDEEFF001122
+
+Group OperatorNames
+
+// flags for System Query
+//    1 -> query this setting
+//    0 -> do not query this setting
+Group SystemReadySettings
+    SimLockQuery                1
+    SMSQuery                    1
+    STKQuery                    1
+    PhonebookQuery              0
+    PhonebookQueryTimeout       20000
+
+// Modem settings
+Group Modem
+    SupportedModem              UbloxModem
+    NetworkInterfaceName        ppp
+    DisableModemReset           0
+
+// Log levels
+Group Logging
+    LogLevel                    2    // 4: Critical, 3: Warning, 2: Info, 1: Verbose

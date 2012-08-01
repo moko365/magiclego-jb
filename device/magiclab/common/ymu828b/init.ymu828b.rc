@@ -1,0 +1,15 @@
+on post-fs-data
+    # Permissions for yamaha audio codec
+    chmod 0666 /dev/snd/pcmC0D0c
+    chmod 0666 /dev/snd/pcmC0D0p
+    chmod 0666 /dev/snd/pcmC0D1c
+    chmod 0666 /dev/snd/pcmC0D1p
+    chmod 0666 /dev/snd/controlC0
+    chmod 0666 /dev/snd/timer
+    chmod 0666 /dev/snd/hwC0D0
+    mkdir /data/misc/ymc 0777 system system
+
+on fs
+    # Permissions for yamaha audio codec
+    chmod 0777 /ymc
+    chmod 0777 /ymc/param

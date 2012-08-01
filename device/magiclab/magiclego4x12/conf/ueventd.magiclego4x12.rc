@@ -1,0 +1,45 @@
+/dev/mali                 0666   system     system
+/dev/ion                  0666   system     system
+/dev/ump                  0666   system     graphics
+/dev/exynos-mem           0666   system     graphics
+/dev/s3c-mfc              0660   media      graphics
+/dev/s3c-mem              0660   system     system
+/dev/video0               0660   system     camera
+/dev/video1               0660   system     camera
+/dev/video2               0660   system     camera
+/dev/video3               0660   system     camera
+/dev/video11              0666   system     system
+/dev/video12              0666   system     system
+/dev/video14              0660   system     system
+/dev/video16              0660   system     system
+/dev/video20              0660   system     system
+/dev/video21              0660   system     system
+/dev/fimg2d               0666   system     graphics
+/dev/i2c-1                0660   system     system
+/dev/i2c-2                0660   system     system
+/dev/i2c-7                0660   system     system
+/dev/CEC                  0660   system     system
+/dev/HPD                  0660   system     system
+/dev/s5p-jpeg             0666   system     camera
+/dev/pmem_gpu1            0660   system     graphics
+/dev/input/*              0666   root       input
+/dev/ttyACM*              0666   radio      radio
+/dev/ttyUSB*              0666   radio      radio
+
+# ULP Audio
+/dev/srp                  0660   system     audio
+/dev/srp_ctrl             0660   system     audio
+
+# mt6620
+/dev/ttySAC0              0660   system     system
+/dev/stpwmt               0666   system     system
+/dev/stpgps               0666   system     system
+/dev/gps                  0666   system     system
+/dev/fm                   0666   system     system
+/dev/wmtWifi              0666   system     system
+
+
+# Gyroscope Sensor MPU3050 & MPU6050 setting
+/dev/mpu		0777   system     system
+/dev/mpuirq		0777   system     system
+/dev/timerirq		0777   system     system

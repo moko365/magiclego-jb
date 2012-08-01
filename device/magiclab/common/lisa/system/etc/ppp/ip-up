@@ -1,0 +1,30 @@
+#!/system/bin/sh
+case $1 in
+    ppp2)
+	/android/bin/iptables --flush;
+	/android/bin/iptables --table nat --flush;
+	/android/bin/iptables --delete-chain;
+	/android/bin/iptables --table nat --append POSTROUTING --out-interface ppp0 -j MASQUERADE;
+	/android/bin/iptables --append FORWARD --in-interface ppp1 -j ACCEPT;
+	echo 0 > /proc/sys/net/ipv4/ip_forward;
+	echo 1 > /proc/sys/net/ipv4/ip_forward;
+	;;
+    *)
+	/system/bin/setprop "net.interfaces.defaultroute" "$1"
+    ;;
+esac
+
+/system/bin/setprop "net.$1.dns1" "$DNS1"
+/system/bin/setprop "net.$1.dns2" "$DNS2"
+/system/bin/setprop "net.$1.local-ip" "$IPLOCAL"
+/system/bin/setprop "net.$1.remote-ip" "$IPREMOTE"
+if [ "$IPREMOTE" != "10.64.64.65" ]
+then
+	/system/bin/setprop "net.$1.gw" "$IPREMOTE"
+else
+	/system/bin/setprop "net.$1.gw" "$IPLOCAL"
+fi
+
+/system/bin/setprop "net.$1.operstate" "up"
+/system/bin/setprop "net.ppp.start" ""
+/system/bin/log -t pppd.ip-up "$1 ip-up. l: $IPLOCAL r: $IPREMOTE dns1: $DNS1 dns2: $DNS2"
