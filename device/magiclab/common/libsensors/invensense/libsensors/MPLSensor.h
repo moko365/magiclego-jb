@@ -136,7 +136,9 @@ private:
     void fillLinearAccel(struct sensor_t *list);
 };
 
+extern "C" {
 void setCallbackObject(MPLSensor*);
+}
 
 /*****************************************************************************/
 
