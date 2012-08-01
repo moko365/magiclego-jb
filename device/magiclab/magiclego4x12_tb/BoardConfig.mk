@@ -128,3 +128,13 @@ endif
 ifeq ($(BUILD),binary)
 BOARD_USE_BINARY_BUILD := true
 endif
+
+# ymu828b
+BUILD_YMU828B_BINARY := true
+
+ifeq ($(BUILD_YMU828B_BINARY),true)
+BOARD_USE_BINARY_BUILD := true
+endif
+
+# Don't use AOSP's Invensense
+BOARD_USES_GENERIC_INVENSENSE := false

@@ -52,15 +52,15 @@ DEVICE_PACKAGE_OVERLAYS := $(LOCAL_PATH)/overlay
 ifeq ($(BOARD_USES_HGL),true)
 PRODUCT_COPY_FILES += \
 	$(LOCAL_PATH)/conf/egl.cfg:system/lib/egl/egl.cfg \
-	device/samsung/exynos4/lib/mali_ump/libEGL_mali.so:system/lib/egl/libEGL_mali.so \
-	device/samsung/exynos4/lib/mali_ump/libGLESv1_CM_mali.so:system/lib/egl/libGLESv1_CM_mali.so \
-	device/samsung/exynos4/lib/mali_ump/libGLESv2_mali.so:system/lib/egl/libGLESv2_mali.so \
-	device/samsung/exynos4/lib/mali_ump/libMali.so:system/lib/libMali.so \
-	device/samsung/exynos4/lib/mali_ump/libMali.so:obj/lib/libMali.so \
-	device/samsung/exynos4/lib/mali_ump/libUMP.so:system/lib/libUMP.so \
-	device/samsung/exynos4/lib/mali_ump/libUMP.so:obj/lib/libUMP.so \
-	device/samsung/exynos4/lib/mali_ump/libion.so:system/lib/libion.so \
-	device/samsung/exynos4/lib/mali_ump/libion.so:obj/lib/libion.so
+	device/magiclab/common/mali_ump/libEGL_mali.so:system/lib/egl/libEGL_mali.so \
+	device/magiclab/common/mali_ump/libGLESv1_CM_mali.so:system/lib/egl/libGLESv1_CM_mali.so \
+	device/magiclab/common/mali_ump/libGLESv2_mali.so:system/lib/egl/libGLESv2_mali.so \
+	device/magiclab/common/mali_ump/libMali.so:system/lib/libMali.so \
+	device/magiclab/common/mali_ump/libMali.so:obj/lib/libMali.so \
+	device/magiclab/common/mali_ump/libUMP.so:system/lib/libUMP.so \
+	device/magiclab/common/mali_ump/libUMP.so:obj/lib/libUMP.so \
+	device/magiclab/common/mali_ump/libion.so:system/lib/libion.so \
+	device/magiclab/common/mali_ump/libion.so:obj/lib/libion.so
 endif
 
 # Init files
@@ -174,12 +174,12 @@ PRODUCT_PACKAGES += \
 
 # MFC firmware
 PRODUCT_COPY_FILES += \
-	device/samsung/exynos4/firmware/mfc_fw.bin:system/vendor/firmware/mfc_fw.bin
+	device/magiclab/common/firmware/mfc_fw.bin:system/vendor/firmware/mfc_fw.bin
 
 # FIMC-IS firmware
 PRODUCT_COPY_FILES += \
-	device/samsung/exynos4/firmware/fimc_is_fw.bin:system/vendor/firmware/fimc_is_fw.bin \
-	device/samsung/exynos4/firmware/setfile.bin:system/vendor/firmware/setfile.bin
+	device/magiclab/common/firmware/fimc_is_fw.bin:system/vendor/firmware/fimc_is_fw.bin \
+	device/magiclab/common/firmware/setfile.bin:system/vendor/firmware/setfile.bin
 
 # Input device calibration files
 PRODUCT_COPY_FILES += \
